@@ -26,6 +26,20 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(problemDetails);
     }
 
+    // Handle custom resource not found exception
+    @ExceptionHandler(IncomeNotFoundException.class)
+    public ResponseEntity<ProblemDetails> handleIncomeNotFoundException(IncomeNotFoundException ex) {
+
+        ProblemDetails problemDetails = new ProblemDetails(
+            HttpStatus.NOT_FOUND.toString(),
+            "Income Not Found",
+            ex.getMessage(),
+            "O Faturamento solicitado nao foi encontrado",
+            UUID.randomUUID()
+        );
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(problemDetails);
+    }
+
     //Handling generic exceptions
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ProblemDetails> handleException(Exception ex){
